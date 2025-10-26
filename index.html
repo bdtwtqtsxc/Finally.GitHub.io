@@ -19065,7 +19065,14 @@ try{window.db=db;}catch(e){}
     window.renderXSocialScreenProxy=window.renderXSocialScreen;
   }
   try{window.db=window.db||window.db===undefined&&{};}catch(e){window.db={};}
-})();
+})();// 在数据库初始化结束后加入这一行
+window.db = db;
+
+// 并在任何调用 db.apiConfig.get 之前加：
+if (!window.db || !window.db.apiConfig) {
+  console.warn("数据库未就绪，请稍后重试");
+  return;
+}
 </script>
 </body>
 </html>
